@@ -1,2 +1,19 @@
 <h1>Shops#index</h1>
-<p>Find me in app/views/shops/index.html.erb</p>
+<!-- マップを表示する要素 -->
+<div id="map" style="height: 600px;"></div>
+
+<script>
+  // 地図を初期化する関数
+  function initMap() {
+    // 地図のオプション
+    const mapOptions = {
+      center: { lat: 35.6803997, lng: 139.7690174 }, // 地図の初期表示位置（東京）
+      zoom: 10 // ズームレベル
+    };
+
+    // 地図を指定した要素に表示
+    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>
+
