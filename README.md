@@ -1,25 +1,47 @@
+<<<<<<< Updated upstream
 # プロダクト名 
 <!-- プロダクト名に変更してください -->
+=======
+# README
+>>>>>>> Stashed changes
 
-![プロダクト名](https://kc3.me/cms/wp-content/uploads/2023/11/2b1b6d9083182c0ce0aeb60000b4d7a7.png)
-<!-- プロダクト名・イメージ画像を差し変えてください -->
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
+Things you may want to cover:
 
+<<<<<<< Updated upstream
 ## チーム名
 チーム○ XXXX
 <!-- チームIDとチーム名を入力してください -->
+=======
+* Ruby version
+>>>>>>> Stashed changes
 
+* System dependencies
 
-## 背景・課題・解決されること
+* Configuration
 
+<<<<<<< Updated upstream
 <!-- テーマ「関西をいい感じに」に対して、考案するプロダクトがどういった(Why)背景から思いついたのか、どのよう(What)な課題があり、どのよう(How)に解決するのかを入力してください -->
 
 
 ## プロダクト説明
 
 <!-- 開発したプロダクトの説明を入力してください -->
+=======
+* Database creation
 
+* Database initialization
 
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+>>>>>>> Stashed changes
+
+* Deployment instructions
+
+<<<<<<< Updated upstream
 ## 操作説明・デモ動画
 [デモ動画はこちら](https://www.youtube.com/watch?v=_FAA15ARmas)
 <!-- 開発したプロダクトの操作説明について入力してください。また、操作説明デモ動画があれば、埋め込みやリンクを記載してください -->
@@ -39,3 +61,6 @@
 markdownの記法はこちらを参照してください！
 https://docs.github.com/ja/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
 -->
+=======
+* ...
+>>>>>>> Stashed changes
