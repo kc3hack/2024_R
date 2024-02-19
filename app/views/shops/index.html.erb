@@ -15,5 +15,24 @@
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
   }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>
+<!--script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script-->
 
+<div>
+  <%= form_with url: shops_search_path, method: :get do |f| %>
+
+    <h3>検索</h3>
+    <%= f.text_field :genre %>
+    <%= f.submit "検索"%>
+  <% end %>
+
+  <table>
+  <th>名前</th>
+  <th>評価</th>
+  <% @shops.each do |shop| %>
+  <tr>
+      <td><%= shop["displayName"]["text"] %></td>
+      <td><%= shop["rating"]%></td>
+  </tr>
+  <% end%>
+  </table>
+</div>
