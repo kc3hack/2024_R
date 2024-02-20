@@ -77,3 +77,6 @@ end
 
 # APIキーを使うための準備
 gem 'dotenv-rails'
+
+# ピン挿すためのgem
+gem "geocoder"
