@@ -15,12 +15,28 @@
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     // ピンを挿す（Shopの情報からピンを追加する）
+    let count = 1;
     <% @shops.each do |shop| %>
       new google.maps.Marker({
         position: {lat: <%= shop["location"]["latitude"] %>, lng: <%= shop["location"]["longitude"] %>}, 
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE, // シンボル円
+            scale: 15,           // サイズ
+            fillColor: '#fff',   // 塗り潰し色
+            fillOpacity: 0.8,    // 塗り潰し透過率
+            strokeColor: "red",  // 枠線の色
+            strokeWeight: 1,     // 枠線の幅
+        },
+        label: {
+            text:  String(count), //ラベル文字
+            color: 'black',     //文字の色
+            fontSize: '15px',    //文字のサイズ
+            fontWeight: '500'    //文字の太さ
+        },
         map: map,
         title: '<%= j shop["displayName"]["text"] %>'
       });
+      count++;
     <% end %>
   }
 </script>

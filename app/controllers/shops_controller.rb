@@ -45,7 +45,6 @@ class ShopsController < ApplicationController
   
   if response.code.to_i == 200
     result = JSON.parse(response.body)
-    puts result#
     @shops = result["places"].sort_by{|place| place["rating"] }.reverse
     render :index
   else
