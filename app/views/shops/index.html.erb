@@ -7,12 +7,21 @@
   function initMap() {
     // 地図のオプション
     const mapOptions = {
-      center: { lat: 35.6803997, lng: 139.7690174 }, // 地図の初期表示位置（東京）
+      center: { lat: 34.65112098708317, lng: 135.58856512184337 }, // 地図の初期表示位置（長瀬）
       zoom: 10 // ズームレベル
     };
 
     // 地図を指定した要素に表示
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // ピンを挿す（Shopの情報からピンを追加する）
+    <% @shops.each do |shop| %>
+      new google.maps.Marker({
+        position: {lat: <%= shop["location"]["latitude"] %>, lng: <%= shop["location"]["longitude"] %>}, 
+        map: map,
+        title: '<%= j shop["displayName"]["text"] %>'
+      });
+    <% end %>
   }
 </script>
 <!--script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script-->

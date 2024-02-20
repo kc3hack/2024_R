@@ -35,7 +35,7 @@ class ShopsController < ApplicationController
     headers = {
       'Content-Type' => 'application/json',
       'X-Goog-Api-Key' => ENV["GOOGLE_PLACE_API_KEY"],
-      'X-Goog-FieldMask' => 'places.displayName,places.formattedAddress,places.rating'
+      'X-Goog-FieldMask' => 'places.displayName,places.formattedAddress,places.rating,places.location'
     }
 
   request = Net::HTTP::Post.new(url.path, headers)
@@ -45,6 +45,7 @@ class ShopsController < ApplicationController
   
   if response.code.to_i == 200
     result = JSON.parse(response.body)
+    puts result#
     @shops = result["places"].sort_by{|place| place["rating"] }.reverse
     render :index
   else
