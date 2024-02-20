@@ -2,6 +2,8 @@ require 'net/http'
 require 'uri'
 
 class ShopsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :search]
+  
   def index
     @shops = Shop.all
   end
