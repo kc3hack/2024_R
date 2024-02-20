@@ -1,2 +1,22 @@
 <h1>Shops#show</h1>
-<p>Find me in app/views/shops/show.html.erb</p>
+
+<table class="table">
+    <thead>
+        <th>店舗名</th>
+        <th>住所</th>
+        <th>緯度</th>
+        <th>経度</th>
+        <th>評価</th>
+        <th>お気に入り登録</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><%= @shop.name %></td>
+            <td><%= @shop.address %></td>
+            <td><%= @shop.latitude %></td>
+            <td><%= @shop.longitude %></td>
+            <td><%= @shop.evaluation %></td>
+            <td><%= @shop.is_favorite %></td>
+        </tr>
+    </tbody>
+</table>

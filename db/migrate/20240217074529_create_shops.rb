@@ -5,6 +5,7 @@ class CreateShops < ActiveRecord::Migration[7.0]
       t.timestamps
       t.integer :user_id
       t.string :name, null: false
+      t.string :address, null: false
       t.float :latitude, null: false
       t.float :longitude, null: false
       t.float :evaluation, null: false

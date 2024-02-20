@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_130350) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.string "name", null: false
+    t.string "address", null: false
     t.float "latitude", null: false
     t.float "longitude", null: false
     t.float "evaluation", null: false
