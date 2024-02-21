@@ -1,22 +1,34 @@
-<h1>Shops#show</h1>
+<div class="container">       
+    <div class="row"> 
+        
+        <h1 class="text-center p-3 border-bottom">店舗詳細</h1>
 
-<table class="table">
-    <thead>
-        <th>店舗名</th>
-        <th>住所</th>
-        <th>緯度</th>
-        <th>経度</th>
-        <th>評価</th>
-        <th>お気に入り登録</th>
-    </thead>
-    <tbody>
-        <tr>
-            <td><%= @shop.name %></td>
-            <td><%= @shop.address %></td>
-            <td><%= @shop.latitude %></td>
-            <td><%= @shop.longitude %></td>
-            <td><%= @shop.evaluation %></td>
-            <td><%= @shop.is_favorite %></td>
-        </tr>
-    </tbody>
-</table>
+        <div class="col-5 m-3">
+            <h2><%= @shop.name %></h2>
+
+            <div class="row border-bottom">
+                <div class="col-4 text-end">
+                    <p>評価: <%= @shop.evaluation %></p>
+                </div>
+                <div class="col-5">
+                    <p>
+                        <%= link_to shop_favorite_change_path(@shop), data: { turbo_method: :patch } do %>
+                            <% if @shop.is_favorite %>
+                                <i class="bi bi-star-fill"></i> お気に入り登録済
+                            <% else %>
+                                <i class="bi bi-star"></i> お気に入り未登録
+                            <% end %>
+                        <% end %>
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-3 border-bottom">
+                <p><%= @shop.address %></p>
+            </div>
+        </div>
+
+        <div class="col-5 m-3">↓ここに地図？→</div>
+
+    </div>
+</div>

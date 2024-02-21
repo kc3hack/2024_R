@@ -32,6 +32,19 @@ class ShopsController < ApplicationController
     end
   end
 
+  def favorite
+    @shop = Shop.find(params[:id])
+
+    if @shop.user != current_user # 別のユーザの登録情報だったら弾く
+      redirect_to root_path
+      return
+    end
+    
+    flag = @shop.is_favorite # 現在のお気に入り状況
+    @shop.update(is_favorite: !flag) # を反転させる
+    redirect_to shop_path(@shop)
+  end
+
   def search
 
     #テキストで検索するエンドポイント
