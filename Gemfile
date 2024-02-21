@@ -80,3 +80,6 @@ gem 'dotenv-rails'
 
 # ピン挿すためのgem
 gem "geocoder"
+
+# ログイン認証用
+gem 'devise'

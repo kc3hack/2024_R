@@ -51,13 +51,14 @@
   <% end %>
 
   <table>
-  <th>名前</th>
-  <th>評価</th>
-  <% @shops.each do |shop| %>
-  <tr>
-      <td><%= shop["displayName"]["text"] %></td>
-      <td><%= shop["rating"]%></td>
-  </tr>
-  <% end%>
+    <th>名前</th>
+    <th>評価</th>
+    <% @shops.each do |shop| %>
+      <tr>
+          <td><%= shop["displayName"]["text"] %></td>
+          <td><%= shop["rating"]%></td>
+          <td><%= link_to "詳細を見る", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"]), data: { turbo_method: :post } %></td>
+      </tr>
+    <% end%>
   </table>
 </div>
