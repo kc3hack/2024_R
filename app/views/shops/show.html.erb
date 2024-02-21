@@ -28,7 +28,50 @@
             </div>
         </div>
 
-        <div class="col-5 m-3">↓ここに地図？→</div>
-
+        <div class="col-5 m-3" id="map">↓ここに地図？→</div>
+        
+        </div>
     </div>
 </div>
+
+
+<script>
+  // 地図を初期化する関数
+            function initMap() {
+                //スタート地点(今は長瀬)
+                const start = new google.maps.LatLng(34.65112098708317,135.58856512184337)
+                // 地図のオプション
+                const mapOptions = {
+                center: start,
+                zoom: 10 // ズームレベル
+                };
+
+                // 地図を指定した要素に表示
+                const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                //店の座標
+                const shopCoordinate = new google.maps.LatLng(<%= @shop.latitude %>,<%= @shop.longitude%>);
+                const directionsService = new google.maps.DirectionsService();
+	            const directionsRenderer = new google.maps.DirectionsRenderer();
+
+                const request = {
+                    //出発点
+                    origin: start,
+                    //目的地
+                    destination: shopCoordinate,
+                    travelMode: google.maps.DirectionsTravelMode.WALKING
+                }
+                
+                directionsService.route(request, function(result, status) {
+		            if (status == google.maps.DirectionsStatus.OK) {
+			            directionsRenderer.setOptions({
+				            preserveViewport: true //ズーム率を変更してルート全体を表示しない
+			        });
+			        // ルート検索の結果を地図上に描画
+			        directionsRenderer.setDirections(result);
+			        directionsRenderer.setMap(map);
+		            }
+	            });
+            }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>
+
