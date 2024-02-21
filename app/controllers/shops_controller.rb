@@ -90,5 +90,15 @@ class ShopsController < ApplicationController
 
   end
 
+  def patrol
+    @favorite_shops = Shop.where(is_favorite: true)
+  end
+
+  def route
+    #via1~8で経路は持って来れると思われる
+    #名前からモデルを見つけてそれの緯度経度を使って中間点を設定しマップを表示させたい
+  end
+
+
 
 end

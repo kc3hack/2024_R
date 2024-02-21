@@ -1,0 +1,9 @@
+<h3>最大8箇所まで指定可能 ルート検索</h3>
+<%= form_with(url: shops_route_path, method: :post) do |f| %>
+    <% (1..8).each do |n| %>
+        <%= f.select "via#{n}", @favorite_shops.pluck(:name), { include_blank: true, selected: @favorite_shops[0] }, { value_method: :name } %></br>
+    <% end %>
+    <%= f.submit "検索" %>
+<% end %>
+
+
