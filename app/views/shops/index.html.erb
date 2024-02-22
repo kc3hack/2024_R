@@ -1,6 +1,33 @@
-<h1>Shops#index</h1>
-<!-- マップを表示する要素 -->
-<div id="map" style="background-color: black; height: 600px;"></div>
+<div class="container">
+  <div class="row">
+    <h1>Shops#index</h1>
+
+    <div class="col-5 pt-3">
+      <%= form_with url: shops_search_path, method: :get do |f| %>
+
+        <h3>検索</h3>
+        <%= f.text_field :genre %>
+        <%= f.submit "検索"%>
+      <% end %>
+
+      <table>
+        <th>名前</th>
+        <th>評価</th>
+        <% @shops.each do |shop| %>
+          <tr>
+              <td><%= shop["displayName"]["text"] %></td>
+              <td><%= shop["rating"]%></td>
+              <td><%= link_to "詳細を見る", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"]), data: { turbo_method: :post } %></td>
+          </tr>
+        <% end%>
+      </table>
+    </div>
+
+    <!-- マップを表示する要素 -->
+    <div id="map" style="background-color: black; height: 600px;" class="col-6 pt-3"></div>
+
+  </div>
+</div>
 
 <script>
   // 地図を初期化する関数
@@ -40,25 +67,4 @@
     <% end %>
   }
 </script>
-<!--script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script-->
-
-<div>
-  <%= form_with url: shops_search_path, method: :get do |f| %>
-
-    <h3>検索</h3>
-    <%= f.text_field :genre %>
-    <%= f.submit "検索"%>
-  <% end %>
-
-  <table>
-    <th>名前</th>
-    <th>評価</th>
-    <% @shops.each do |shop| %>
-      <tr>
-          <td><%= shop["displayName"]["text"] %></td>
-          <td><%= shop["rating"]%></td>
-          <td><%= link_to "詳細を見る", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"]), data: { turbo_method: :post } %></td>
-      </tr>
-    <% end%>
-  </table>
-</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>
