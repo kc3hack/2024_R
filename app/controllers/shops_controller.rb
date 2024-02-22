@@ -85,7 +85,7 @@ class ShopsController < ApplicationController
     render :index
   else
     puts "API request failed with status #{response.code}"
-    redirect_to shops_show_path
+    redirect_to root_path
   end
 
   end
