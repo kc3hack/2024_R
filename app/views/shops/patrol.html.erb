@@ -1,9 +1,93 @@
-<h3>最大8箇所まで指定可能 ルート検索</h3>
-<%= form_with(url: shops_route_path, method: :post) do |f| %>
-    <% (1..8).each do |n| %>
-        <%= f.select "via#{n}", @favorite_shops.pluck(:name), { include_blank: true, selected: @favorite_shops[0] }, { value_method: :name } %></br>
-    <% end %>
-    <%= f.submit "検索" %>
-<% end %>
+<div class="container">       
+    <div class="row">  
+        <h3>最大8箇所まで指定可能 ルート検索</h3>
 
+        <div class="col-5 m-3">
+            <!--検索フォーム-->
+            <%= form_with(url: shops_route_path, method: :post) do |f| %>
+                <% (1..8).each do |n| %>
+                    <%= f.select "via#{n}", @favorite_shops.pluck(:name), { include_blank: true, selected: @favorite_shops[0] }, { value_method: :name } %></br>
+                <% end %>
+                <%= f.submit "検索" %>
+            <% end %>
+
+            <!--指定した店一覧(検索後に表示)-->
+            <% if !@via_array.empty? %>
+                <h5 class="text-center border-bottom p-3">指定した店舗</h5>
+                <table class="table m-3">
+                    <th>名前</th>
+                    <th>評価</th>
+                    <% @via_array.each do |shop| %>
+                        <tr>
+                            <td><%= shop.name %></td>
+                            <td><%= shop.evaluation%></td>
+                        </tr>
+                    <% end%>
+                </table>
+            <% end %>
+        </div>
+
+        <!--地図表示-->
+        <div class="col-5 m-3" id="map" style="background-color: black; height: 500px;">↓ここに地図→</div>
+    </div>
+</div>
+
+
+<script>
+  // 地図を初期化する関数
+            function initMap() {
+                //スタート地点(今は長瀬)
+                const start = new google.maps.LatLng(34.65112098708317,135.58856512184337)
+                // 地図のオプション
+                const mapOptions = {
+                center: start,
+                zoom: 12 // ズームレベル
+                };
+
+                // 地図を指定した要素に表示
+                const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+                <% if !@via_array.empty? %>
+                    //ゴールの座標
+                    const shopCoordinate = new google.maps.LatLng(<%= @via_array.last.latitude %>,<%= @via_array.last.longitude%>);
+                    const directionsService = new google.maps.DirectionsService();
+                    const directionsRenderer = new google.maps.DirectionsRenderer();
+
+                    // 経由地点の配列
+                    const via_array = []
+                    <% @via_array.each do |v| %>
+                        via_array.push(
+                            {
+                                location: new google.maps.LatLng(<%= v.latitude %>,<%= v.longitude%>),
+                                stopover: false
+                            }
+                        );
+                    <% end %>
+                    // 最後の店(ゴール)を削除
+                    via_array.pop()
+
+                    const request = {
+                        //出発点
+                        origin: start,
+                        //目的地
+                        destination: shopCoordinate,
+                        // 経由地点の配列
+                        waypoints: via_array,
+                        travelMode: google.maps.DirectionsTravelMode.WALKING
+                    };
+                    
+                    directionsService.route(request, function(result, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsRenderer.setOptions({
+                                preserveViewport: true //ズーム率を変更してルート全体を表示しない
+                        });
+                        // ルート検索の結果を地図上に描画
+                        directionsRenderer.setDirections(result);
+                        directionsRenderer.setMap(map);
+                        }
+                    });
+                <% end %>
+            }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>
 

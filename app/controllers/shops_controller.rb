@@ -91,12 +91,33 @@ class ShopsController < ApplicationController
   end
 
   def patrol
-    @favorite_shops = Shop.where(is_favorite: true)
+    @favorite_shops = Shop.where(user_id: current_user.id, is_favorite: true)
+    @via_array = [] # エラー回避用
   end
 
   def route
     #via1~8で経路は持って来れると思われる
     #名前からモデルを見つけてそれの緯度経度を使って中間点を設定しマップを表示させたい
+    via_params = [params[:via1],params[:via2],params[:via3],params[:via4],params[:via5],params[:via6],params[:via7],params[:via8]]
+
+    # 指定された店の名前のみ抽出
+    selected_name_array = []
+    via_params.each do |v|
+      if v != ""
+        selected_name_array.push(v)
+      end
+    end
+
+    # 指定された店のレコードを取得
+    @via_array = []
+    selected_name_array.each do |n|
+      @via_array.push(Shop.find_by(name: n))
+    end
+
+    @favorite_shops = Shop.where(user_id: current_user.id, is_favorite: true)
+    render :patrol, status: 303
+    #redirect_to shops_patrol_path(array: @via_array)
+    #redirect_to action: :patrol, params:{'array'  => @via_array}
   end
 
 
