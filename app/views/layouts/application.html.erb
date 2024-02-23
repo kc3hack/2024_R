@@ -16,12 +16,12 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hamburger" aria-controls="hamburger" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="fs-3 navbar-brand text-warning pl-5">グルメトレジャーマップ</a>
+        <a class="fs-3 navbar-brand text-warning">グルメトレジャーマップ</a>
         <div class="collapse navbar-collapse justify-content-evenly" id="hamburger">
           <ul class="nav navbar-nav">
             <% if user_signed_in? %>
               <button type="button" class="btn btn-warning mx-5 px-5"><%= link_to "店舗一覧/検索", root_path %></button>
-              <button type="button" class="btn btn-warning mx-5 px-5"><%= link_to "巡回ルート検索", shops_patrol_path%></button>
+              <button type="button" class="btn btn-warning mx-5 px-5"><%= link_to "ルート検索", shops_patrol_path%></button>
               <button type="button" class="btn btn-warning mx-5 px-5"><%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %></button>
             <% else %>
               <button type="button" class="btn btn-warning mx-5 px-5"><%= link_to "新規登録", new_user_registration_path %></button>

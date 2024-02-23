@@ -15,20 +15,24 @@
             <% if !@via_array.empty? %>
                 <h5 class="text-center border-bottom p-3">指定した店舗</h5>
                 <table class="table m-3">
+                    <% count = 1 %>
+                    <th>目的地</th>
                     <th>名前</th>
                     <th>評価</th>
                     <% @via_array.each do |shop| %>
                         <tr>
+                            <td><%= count %></td>
                             <td><%= shop.name %></td>
                             <td><%= shop.evaluation%></td>
                         </tr>
+                        <% count += 1 %>
                     <% end%>
                 </table>
             <% end %>
         </div>
 
         <!--地図表示-->
-        <div class="col-5 m-3" id="map" style="background-color: black; height: 500px;">↓ここに地図→</div>
+        <div class="col-6 m-3" id="map" style="background-color: black; height: 500px;">↓ここに地図→</div>
     </div>
 </div>
 
