@@ -21,6 +21,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_130350) do
     t.float "longitude", null: false
     t.float "evaluation", null: false
     t.boolean "is_favorite", default: false
+    t.string "phone_number"
+    t.string "monday"
+    t.string "tuesday"
+    t.string "wednesday"
+    t.string "thursday"
+    t.string "friday"
+    t.string "saturday"
+    t.string "sunday"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

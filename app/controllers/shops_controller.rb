@@ -14,10 +14,27 @@ class ShopsController < ApplicationController
     evaluation = params[:evaluation].to_f # 評価
     name = params[:name] # 店舗名
     address = params[:address] # 住所
+    phone_number = params[:phone_number] # 電話番号
+    weekday = params[:weekday] # 営業時間の配列
     shop = Shop.find_by(user_id: current_user.id, address: address) # 住所に紐付いたユーザ情報があればデータ取得
 
     if !shop # 該当データに初めてアクセスする時(保存されてなかった時)
-      shop = Shop.new(user_id: current_user.id, latitude: lat, longitude: lon, name: name, evaluation: evaluation, address: address)
+      shop = Shop.new(
+        user_id: current_user.id, 
+        latitude: lat, 
+        longitude: lon, 
+        name: name, 
+        evaluation: evaluation, 
+        address: address,
+        phone_number: phone_number,
+        monday: weekday[0],
+        tuesday: weekday[1],
+        wednesday: weekday[2],
+        thursday: weekday[3],
+        friday: weekday[4],
+        saturday: weekday[5],
+        sunday: weekday[6],
+        )
       shop.save # 次回以降の詳細画面アクセス用にShopレコードとして保存する
     end
     redirect_to shop_path(shop)
@@ -71,7 +88,7 @@ class ShopsController < ApplicationController
     headers = {
       'Content-Type' => 'application/json',
       'X-Goog-Api-Key' => ENV["GOOGLE_PLACE_API_KEY"],
-      'X-Goog-FieldMask' => 'places.displayName,places.formattedAddress,places.rating,places.location'
+      'X-Goog-FieldMask' => 'places.displayName,places.formattedAddress,places.rating,places.location,places.nationalPhoneNumber,places.regularOpeningHours'
     }
 
   request = Net::HTTP::Post.new(url.path, headers)

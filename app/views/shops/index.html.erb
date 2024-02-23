@@ -21,7 +21,7 @@
               <td class="col-1 p-1"><%= count %></td>
               <td class="col-3 py-1"><%= shop["displayName"]["text"] %></td>
               <td class="col-1 py-1"><%= shop["rating"]%></td>
-              <td class="col-1 border-top py-1"><%= link_to "詳細", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"]), data: { turbo_method: :post } %></td>
+              <td class="col-1 border-top py-1"><%= link_to "詳細", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"], phone_number: shop["nationalPhoneNumber"], weekday: shop["regularOpeningHours"]["weekdayDescriptions"]), data: { turbo_method: :post } %></td>
           </tr>
           <% count += 1 %>
         <% end%>
