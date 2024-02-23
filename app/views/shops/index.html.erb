@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <h1>Shops#index</h1>
+    <h1>店舗一覧/検索<!--Shops#index--></h1>
 
     <div class="col-5 pt-3">
       <%= form_with url: shops_search_path, method: :get do |f| %>
@@ -10,21 +10,26 @@
         <%= f.submit "検索"%>
       <% end %>
 
-      <table>
-        <th>名前</th>
-        <th>評価</th>
+      <table class="table">
+        <% count = 1 %>
+        <th class="px-1 py-2">順位</th>
+        <th class="px-1 py-2">名前</th>
+        <th class="px-1 py-2">評価</th>
+        <th class="px-1 py-2">詳細</th>
         <% @shops.each do |shop| %>
           <tr>
-              <td><%= shop["displayName"]["text"] %></td>
-              <td><%= shop["rating"]%></td>
-              <td><%= link_to "詳細を見る", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"]), data: { turbo_method: :post } %></td>
+              <td class="col-1 p-1"><%= count %></td>
+              <td class="col-3 py-1"><%= shop["displayName"]["text"] %></td>
+              <td class="col-1 py-1"><%= shop["rating"]%></td>
+              <td class="col-1 border-top py-1"><%= link_to "詳細", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"]), data: { turbo_method: :post } %></td>
           </tr>
+          <% count += 1 %>
         <% end%>
       </table>
     </div>
 
     <!-- マップを表示する要素 -->
-    <div id="map" style="background-color: black; height: 600px;" class="col-6 pt-3"></div>
+    <div id="map" style="background-color: black; height: 600px;" class="col-7 pt-3"></div>
 
   </div>
 </div>
