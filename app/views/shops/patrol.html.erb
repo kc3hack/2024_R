@@ -15,17 +15,13 @@
             <% if !@via_array.empty? %>
                 <h5 class="text-center border-bottom p-3">指定した店舗</h5>
                 <table class="table m-3">
-                    <% count = 1 %>
-                    <th>目的地</th>
                     <th>名前</th>
                     <th>評価</th>
                     <% @via_array.each do |shop| %>
                         <tr>
-                            <td><%= count %></td>
                             <td><%= shop.name %></td>
                             <td><%= shop.evaluation%></td>
                         </tr>
-                        <% count += 1 %>
                     <% end%>
                 </table>
             <% end %>
@@ -63,7 +59,7 @@
                         via_array.push(
                             {
                                 location: new google.maps.LatLng(<%= v.latitude %>,<%= v.longitude%>),
-                                stopover: false
+                                stopover: true
                             }
                         );
                     <% end %>
@@ -75,6 +71,8 @@
                         origin: start,
                         //目的地
                         destination: shopCoordinate,
+                        //ルート最適化処理
+                        optimizeWaypoints: true,
                         // 経由地点の配列
                         waypoints: via_array,
                         travelMode: google.maps.DirectionsTravelMode.WALKING
