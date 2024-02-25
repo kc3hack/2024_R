@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <h1>店舗一覧/検索<!--Shops#index--></h1>
+
+    <div class="col-5 pt-3">
+      <%= form_with url: shops_search_path, method: :get do |f| %>
+
+        <h3>検索</h3>
+        <%= f.text_field :genre %>
+        <%= f.submit "検索"%>
+      <% end %>
+
+      <table class="table">
+        <% count = 1 %>
+        <th class="px-1 py-2">順位</th>
+        <th class="px-1 py-2">名前</th>
+        <th class="px-1 py-2">評価</th>
+        <th class="px-1 py-2">詳細</th>
+        <% @shops.each do |shop| %>
+          <tr>
+              <td class="col-1 p-1"><%= count %></td>
+              <td class="col-3 py-1"><%= shop["displayName"]["text"] %></td>
+              <td class="col-1 py-1"><%= shop["rating"]%></td>
+              <td class="col-1 border-top py-1"><%= link_to "詳細", shops_path(lat: shop["location"]["latitude"], lon: shop["location"]["longitude"], evaluation: shop["rating"], name: shop["displayName"]["text"], address: shop["formattedAddress"], phone_number: shop["nationalPhoneNumber"], weekday: shop["regularOpeningHours"]["weekdayDescriptions"]), data: { turbo_method: :post } %></td>
+          </tr>
+          <% count += 1 %>
+        <% end%>
+      </table>
+    </div>
+
+    <!-- マップを表示する要素 -->
+    <div id="map" style="background-color: black; height: 600px;" class="col-7 pt-3"></div>
+
+  </div>
+</div>
+
+<script>
+  // 地図を初期化する関数
+  function initMap() {
+    // 地図のオプション
+    const mapOptions = {
+      center: { lat: 34.65112098708317, lng: 135.58856512184337 }, // 地図の初期表示位置（長瀬）
+      zoom: 10 // ズームレベル
+    };
+
+    // 地図を指定した要素に表示
+    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // ピンを挿す（Shopの情報からピンを追加する）
+    let count = 1;
+    <% @shops.each do |shop| %>
+       marker = new google.maps.Marker({
+        position: {lat: <%= shop["location"]["latitude"] %>, lng: <%= shop["location"]["longitude"] %>}, 
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE, // シンボル円
+            scale: 15,           // サイズ
+            fillColor: '#fff',   // 塗り潰し色
+            fillOpacity: 0.8,    // 塗り潰し透過率
+            strokeColor: "red",  // 枠線の色
+            strokeWeight: 1,     // 枠線の幅
+        },
+        label: {
+            text:  String(count), //ラベル文字
+            color: 'black',     //文字の色
+            fontSize: '15px',    //文字のサイズ
+            fontWeight: '500'    //文字の太さ
+        },
+        map: map,
+        title: '<%= j shop["displayName"]["text"] %>'
+      });
+      count++;
+
+
+    <% end %>
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>

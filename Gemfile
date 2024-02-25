@@ -73,3 +73,13 @@ group :test do
   gem "selenium-webdriver"
 
 end
+
+
+# APIキーを使うための準備
+gem 'dotenv-rails'
+
+# ピン挿すためのgem
+gem "geocoder"
+
+# ログイン認証用
+gem 'devise'
