@@ -24,21 +24,49 @@
 
 ## プロダクト説明
 指定したジャンル、距離内にあるお店をピックアップし、それをランキングとともにマップに表示する。
+またログインすると店舗ごとの詳細情報を確認でき、さらにお気に入り登録できるようになる。そしてお気に入り登録した店舗を複数選んでルート検索する機能も実装した。
 <!-- 開発したプロダクトの説明を入力してください -->
 
 
 ## 操作説明・デモ動画
-[デモ動画はこちら](https://www.youtube.com/watch?v=_FAA15ARmas)
+<!--[デモ動画はこちら](https://www.youtube.com/watch?v=_FAA15ARmas)-->
 <!-- 開発したプロダクトの操作説明について入力してください。また、操作説明デモ動画があれば、埋め込みやリンクを記載してください -->
+### 環境の初期化
+```bash
+$ make init
+# docker compose build
+# docker compose up -d --build
+# docker compose exec web rails db:create
+# docker compose stop
+# の4つを行います
+```
+### DB/Bootstrapの初期化
+```bash
+$ make migrate
+$ make precompile
+```
+### ローカルサーバの起動
+```bash
+$ make up
+```
+### ローカルサーバへのアクセス
+**http://localhost:3000**
 
 
 ## 注力したポイント
 
 <!-- 開発したプロダクトの中で、特に注力して作成した箇所・ポイントについて入力してください -->
+- 見やすい画面になるように力を入れました
+- 特にルート検索機能を時間をかけて実装しました
+- Makefileを用いてコマンドに統一感を持たせました
 
 
 ## 使用技術
-Rails
+- Ruby on Rails(Ruby)
+- Bootstrap(css)
+- MySQL
+- Docker
+- Google Maps API
 <!-- 使用技術を入力してください -->
 
 
