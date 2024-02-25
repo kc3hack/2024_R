@@ -99,6 +99,7 @@ class ShopsController < ApplicationController
   if response.code.to_i == 200
     result = JSON.parse(response.body)
     @shops = result["places"].sort_by{|place| place["rating"] || 0 }.reverse
+    render :index
   else
     puts "API request failed with status #{response.code}"
     redirect_to root_path
