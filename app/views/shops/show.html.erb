@@ -38,6 +38,12 @@
                 <p><%= @shop.saturday %></p>
                 <p><%= @shop.sunday %></p>
             </div>
+
+            <div class="pt-3 border-bottom" >
+                <p>合計距離:<h5 id="totalDistance"></h5></p>
+                </p>合計時間:<h5 id="totalTime"></h5></p>
+            </div>
+
         </div>
 
         <div class="col-6 m-3" id="map" style="background-color: black; height: 500px;">↓ここに地図？→</div>
@@ -81,8 +87,35 @@
 			        // ルート検索の結果を地図上に描画
 			        directionsRenderer.setDirections(result);
 			        directionsRenderer.setMap(map);
+                    calcTime(directionsRenderer.getDirections().routes[0])
 		            }
 	            });
+
+
+                function calcTime(route){
+                                //時間を表示 (追加部分)
+                    let totalDistance = 0;
+                    let totalTime = 0;
+                    
+                    console.log(route)
+                    
+                    if(!route){
+                        document.getElementById("totalDistance").innerHTML = " 0km";
+                        document.getElementById("totalTime").innerHTML = " 0分";
+                    }else{
+                        for (let i = 0; i < route.legs.length; i++) {
+                            totalDistance += route.legs[i].distance.value;
+                            totalTime += route.legs[i].duration.value;
+                        }
+                        totalDistance = totalDistance/1000;
+                        totalTime = Math.round(totalTime/60);
+                        console.log(totalTime);
+                        document.getElementById("totalDistance").innerHTML = totalDistance + " km";
+                        document.getElementById("totalTime").innerHTML = totalTime + " 分";
+                    }
+
+                }
+
             }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap"></script>

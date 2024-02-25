@@ -49,7 +49,7 @@
     // ピンを挿す（Shopの情報からピンを追加する）
     let count = 1;
     <% @shops.each do |shop| %>
-      new google.maps.Marker({
+       marker = new google.maps.Marker({
         position: {lat: <%= shop["location"]["latitude"] %>, lng: <%= shop["location"]["longitude"] %>}, 
         icon: {
             path: google.maps.SymbolPath.CIRCLE, // シンボル円
@@ -69,6 +69,8 @@
         title: '<%= j shop["displayName"]["text"] %>'
       });
       count++;
+
+
     <% end %>
   }
 </script>
